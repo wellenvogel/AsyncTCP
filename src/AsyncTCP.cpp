@@ -92,6 +92,8 @@ static uint32_t _closed_index = []() {
     return 1;
 }();
 
+static AsyncLockCallback _lockCallback=NULL;
+static void *_lockCallbackParam=NULL;
 
 static inline bool _init_async_event_queue(){
     if(!_async_queue){
@@ -194,7 +196,9 @@ static void _async_service_task(void *pvParameters){
                 log_e("Failed to add async task to WDT");
             }
 #endif
+            if (_lockCallback) _lockCallback(_lockCallbackParam, true);
             _handle_async_event(packet);
+            if (_lockCallback) _lockCallback(_lockCallbackParam, false);
 #if CONFIG_ASYNC_TCP_USE_WDT
             if(esp_task_wdt_delete(NULL) != ESP_OK){
                 log_e("Failed to remove loop task from WDT");
@@ -358,6 +362,12 @@ static int8_t _tcp_accept(void * arg, AsyncClient * client) {
         free((void*)(e));
     }
     return ERR_OK;
+}
+
+bool asyncTcpRegisterLockCallback(AsyncLockCallback cb, void *param){
+    if (_lockCallback) return false;
+    _lockCallback=cb;
+    _lockCallbackParam=param;
 }
 
 /*

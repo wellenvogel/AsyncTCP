@@ -48,6 +48,7 @@ typedef std::function<void(void*, AsyncClient*, int8_t error)> AcErrorHandler;
 typedef std::function<void(void*, AsyncClient*, void *data, size_t len)> AcDataHandler;
 typedef std::function<void(void*, AsyncClient*, struct pbuf *pb)> AcPacketHandler;
 typedef std::function<void(void*, AsyncClient*, uint32_t time)> AcTimeoutHandler;
+typedef std::function<void(void *,bool lock)> AsyncLockCallback;
 
 struct tcp_pcb;
 struct ip_addr;
@@ -213,5 +214,6 @@ class AsyncServer {
     int8_t _accepted(AsyncClient* client);
 };
 
+bool asyncTcpRegisterLockCallback(AsyncLockCallback cb, void *param);
 
 #endif /* ASYNCTCP_H_ */
