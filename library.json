@@ -1,5 +1,5 @@
 {
-  "name": "AsyncTCP-esphome",
+  "name": "AsyncTCP-wellenvogel",
   "description": "Asynchronous TCP Library for ESP32",
   "keywords": "async,tcp",
   "authors": {
@@ -8,9 +8,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/esphome/AsyncTCP.git"
+    "url": "https://github.com/wellenvogel/AsyncTCP.git"
   },
-  "version": "1.2.2",
+  "version": "1.2.3",
   "license": "LGPL-3.0",
   "frameworks": "arduino",
   "platforms": "espressif32",
